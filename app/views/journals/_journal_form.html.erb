@@ -1,0 +1,6 @@
+
+<%= form_for([@user, @user.journals.new]) do |form| %>
+    <%= form.hidden_field :predict_id, value: "#{@my_pred["id"]}", readonly: "true"%>
+    <%= form.text_field :comment %>
+    <%= form.submit %>
+<% end %>

@@ -1,0 +1,8 @@
+<h1>Journal</h1>
+
+<%= @journals.each do |j| %>
+  <div>
+    <input type="text" value="<%=j.comment%>">
+  </div>
+  <BR>
+<% end %>

@@ -1,0 +1,7 @@
+<% if current_user %>
+  <%= form.hidden_field :user_id, value: "#{current_user.id}", readonly: "true"%>
+<% end %>
+<input type="text" value="<%=@pred_date%>">
+<textarea col="50" row="100"><%=@my_pred["prediction"]%></textarea>
+
+<%= render "/journals/journal_form" %>

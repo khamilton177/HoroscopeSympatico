@@ -1,0 +1,340 @@
+  [1m[35m (81.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (211.0ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to DeviseCreateUsers (20170511151145)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (3.6ms)[0m  [1m[35mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar DEFAULT '' NOT NULL, "encrypted_password" varchar DEFAULT '' NOT NULL, "reset_password_token" varchar, "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar, "last_sign_in_ip" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mselect sqlite_version(*)[0m
+  [1m[35m (4.0ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170511151145"]]
+  [1m[35m (107.5ms)[0m  [1m[36mcommit transaction[0m
+Migrating to AddColumToUser (20170511151346)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (2.4ms)[0m  [1m[35mALTER TABLE "users" ADD "firstname" varchar[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "users" ADD "lastname" varchar[0m
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "users" ADD "zodiac_id" integer[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170511151346"]]
+  [1m[35m (112.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateZodiacs (20170511162209)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (2.9ms)[0m  [1m[35mCREATE TABLE "zodiacs" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "sign" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170511162209"]]
+  [1m[35m (67.7ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreatePredicts (20170511162224)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (2.6ms)[0m  [1m[35mCREATE TABLE "predicts" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "zodiac_id" integer, "pred_date" datetime, "prediction" text, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170511162224"]]
+  [1m[35m (64.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateUserPredict (20170511162302)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (2.8ms)[0m  [1m[35mCREATE TABLE "predicts_users" ("user_id" integer NOT NULL, "predict_id" integer NOT NULL, "comment" text)[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE  INDEX "index_predicts_users_on_user_id_and_predict_id" ON "predicts_users" ("user_id", "predict_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_predicts_users_on_user_id_and_predict_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_predicts_users_on_user_id_and_predict_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_predicts_users_on_predict_id_and_user_id" ON "predicts_users" ("predict_id", "user_id")[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170511162302"]]
+  [1m[35m (133.7ms)[0m  [1m[36mcommit transaction[0m
+Migrating to RenameTable (20170511222529)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (4.6ms)[0m  [1m[35mALTER TABLE "predicts_users" RENAME TO "journals"[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_predicts_users_on_predict_id_and_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_predicts_users_on_predict_id_and_user_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_predicts_users_on_user_id_and_predict_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_predicts_users_on_user_id_and_predict_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_predicts_users_on_predict_id_and_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_predicts_users_on_predict_id_and_user_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_predicts_users_on_user_id_and_predict_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_predicts_users_on_user_id_and_predict_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_predicts_users_on_predict_id_and_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_predicts_users_on_predict_id_and_user_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_predicts_users_on_user_id_and_predict_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_predicts_users_on_user_id_and_predict_id' AND type='index'
+[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE  INDEX "index_journals_on_predict_id_and_user_id" ON "journals" ("predict_id", "user_id")[0m
+  [1m[35m (4.6ms)[0m  [1m[35mDROP INDEX "index_predicts_users_on_predict_id_and_user_id"[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_journals_on_predict_id_and_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_journals_on_predict_id_and_user_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_predicts_users_on_user_id_and_predict_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_predicts_users_on_user_id_and_predict_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_journals_on_predict_id_and_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_journals_on_predict_id_and_user_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_predicts_users_on_user_id_and_predict_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_predicts_users_on_user_id_and_predict_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_journals_on_user_id_and_predict_id" ON "journals" ("user_id", "predict_id")[0m
+  [1m[35m (1.0ms)[0m  [1m[35mDROP INDEX "index_predicts_users_on_user_id_and_predict_id"[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170511222529"]]
+  [1m[35m (79.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.7ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (2.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", 2017-07-07 01:10:02 UTC], ["updated_at", 2017-07-07 01:10:02 UTC]]
+  [1m[35m (87.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.7ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_journals_on_user_id_and_predict_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_journals_on_user_id_and_predict_id' AND type='index'
+[0m
+  [1m[35m (9.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_journals_on_predict_id_and_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_journals_on_predict_id_and_user_id' AND type='index'
+[0m
+  [1m[35m (0.4ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+[0m
+  [1m[35m (0.5ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mZodiac Load (13.0ms)[0m  [1m[34mSELECT "zodiacs".* FROM "zodiacs"[0m
+  [1m[36mZodiac Load (0.6ms)[0m  [1m[34mSELECT "zodiacs".* FROM "zodiacs"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.7ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.4ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_journals_on_user_id_and_predict_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_journals_on_user_id_and_predict_id' AND type='index'
+[0m
+  [1m[35m (0.4ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_journals_on_predict_id_and_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_journals_on_predict_id_and_user_id' AND type='index'
+[0m
+  [1m[35m (0.4ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+[0m
+  [1m[35m (0.5ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+[0m
+  [1m[36mZodiac Load (13.1ms)[0m  [1m[34mSELECT "zodiacs".* FROM "zodiacs"[0m
+  [1m[36mZodiac Load (0.7ms)[0m  [1m[34mSELECT "zodiacs".* FROM "zodiacs" WHERE "zodiacs"."sign" = ?[0m  [["sign", "aries"]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mZodiac Load (0.5ms)[0m  [1m[34mSELECT "zodiacs".* FROM "zodiacs" WHERE "zodiacs"."sign" = ?[0m  [["sign", "Aries"]]
+  [1m[36mZodiac Load (0.7ms)[0m  [1m[34mSELECT  "zodiacs".* FROM "zodiacs" WHERE "zodiacs"."sign" = ? ORDER BY "zodiacs"."id" ASC LIMIT ?[0m  [["sign", "Aries"], ["LIMIT", 1]]
+  [1m[36mZodiac Load (0.5ms)[0m  [1m[34mSELECT  "zodiacs".* FROM "zodiacs" WHERE "zodiacs"."sign" = ? ORDER BY "zodiacs"."id" ASC LIMIT ?[0m  [["sign", "Virgo"], ["LIMIT", 1]]
+Started GET "/" for 127.0.0.1 at 2017-07-06 21:46:43 -0400
+  [1m[36mActiveRecord::SchemaMigration Load (0.9ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by HomeController#index as HTML
+  Rendering home/index.html.erb within layouts/application
+  [1m[36mZodiac Load (0.6ms)[0m  [1m[34mSELECT "zodiacs".* FROM "zodiacs"[0m
+  Rendered home/index.html.erb within layouts/application (23.1ms)
+Completed 200 OK in 3208ms (Views: 3117.9ms | ActiveRecord: 1.6ms)
+
+
+  [1m[36mZodiac Load (0.7ms)[0m  [1m[34mSELECT  "zodiacs".* FROM "zodiacs" WHERE "zodiacs"."sign" = ? ORDER BY "zodiacs"."id" ASC LIMIT ?[0m  [["sign", "Virgo"], ["LIMIT", 1]]
+  [1m[36mZodiac Load (0.6ms)[0m  [1m[34mSELECT "zodiacs".* FROM "zodiacs"[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.7ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.4ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_journals_on_user_id_and_predict_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_journals_on_user_id_and_predict_id' AND type='index'
+[0m
+  [1m[35m (0.4ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_journals_on_predict_id_and_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_journals_on_predict_id_and_user_id' AND type='index'
+[0m
+  [1m[35m (0.4ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+[0m
+  [1m[35m (0.4ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+[0m
+  [1m[36mZodiac Load (13.0ms)[0m  [1m[34mSELECT "zodiacs".* FROM "zodiacs"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (4.0ms)[0m  [1m[32mINSERT INTO "zodiacs" ("sign", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["sign", "Aries"], ["created_at", 2017-07-07 02:03:08 UTC], ["updated_at", 2017-07-07 02:03:08 UTC]]
+  [1m[35m (95.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (2.9ms)[0m  [1m[32mINSERT INTO "zodiacs" ("sign", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["sign", "Taurus"], ["created_at", 2017-07-07 02:03:08 UTC], ["updated_at", 2017-07-07 02:03:08 UTC]]
+  [1m[35m (77.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (3.2ms)[0m  [1m[32mINSERT INTO "zodiacs" ("sign", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["sign", "Gemini"], ["created_at", 2017-07-07 02:03:08 UTC], ["updated_at", 2017-07-07 02:03:08 UTC]]
+  [1m[35m (169.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (3.3ms)[0m  [1m[32mINSERT INTO "zodiacs" ("sign", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["sign", "Cancer"], ["created_at", 2017-07-07 02:03:08 UTC], ["updated_at", 2017-07-07 02:03:08 UTC]]
+  [1m[35m (62.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (2.7ms)[0m  [1m[32mINSERT INTO "zodiacs" ("sign", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["sign", "Leo"], ["created_at", 2017-07-07 02:03:08 UTC], ["updated_at", 2017-07-07 02:03:08 UTC]]
+  [1m[35m (111.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (2.7ms)[0m  [1m[32mINSERT INTO "zodiacs" ("sign", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["sign", "Virgo"], ["created_at", 2017-07-07 02:03:08 UTC], ["updated_at", 2017-07-07 02:03:08 UTC]]
+  [1m[35m (96.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (13.2ms)[0m  [1m[32mINSERT INTO "zodiacs" ("sign", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["sign", "Libra"], ["created_at", 2017-07-07 02:03:08 UTC], ["updated_at", 2017-07-07 02:03:08 UTC]]
+  [1m[35m (83.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (2.8ms)[0m  [1m[32mINSERT INTO "zodiacs" ("sign", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["sign", "Scorpio"], ["created_at", 2017-07-07 02:03:08 UTC], ["updated_at", 2017-07-07 02:03:08 UTC]]
+  [1m[35m (127.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (3.1ms)[0m  [1m[32mINSERT INTO "zodiacs" ("sign", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["sign", "Sagittarius"], ["created_at", 2017-07-07 02:03:09 UTC], ["updated_at", 2017-07-07 02:03:09 UTC]]
+  [1m[35m (79.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (4.0ms)[0m  [1m[32mINSERT INTO "zodiacs" ("sign", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["sign", "Capricorn"], ["created_at", 2017-07-07 02:03:09 UTC], ["updated_at", 2017-07-07 02:03:09 UTC]]
+  [1m[35m (77.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (2.4ms)[0m  [1m[32mINSERT INTO "zodiacs" ("sign", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["sign", "Aquarius"], ["created_at", 2017-07-07 02:03:09 UTC], ["updated_at", 2017-07-07 02:03:09 UTC]]
+  [1m[35m (70.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (2.5ms)[0m  [1m[32mINSERT INTO "zodiacs" ("sign", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["sign", "Pisces"], ["created_at", 2017-07-07 02:03:09 UTC], ["updated_at", 2017-07-07 02:03:09 UTC]]
+  [1m[35m (70.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mZodiac Load (13.0ms)[0m  [1m[34mSELECT "zodiacs".* FROM "zodiacs"[0m

@@ -1,0 +1,5 @@
+<h1>Your Daily Prediction</h1>
+
+<% @zodiacs.each do |z| %>
+  <span id="<%= z.sign %>"><%= link_to("#{z[:sign]}", zodiac_path(id: z.sign)) %></span>
+<%end%>

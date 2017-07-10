@@ -1,0 +1,9 @@
+<h1>Need to show</>
+
+<%= @journals.each do |j| %>
+  <div>
+    <%= text_area :predict_id, value: "#{@pred_id}" %>
+    <%= text_field :comment %>
+  </div>
+  <BR>
+<% end %>
