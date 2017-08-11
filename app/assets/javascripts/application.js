@@ -12,8 +12,10 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require tether
 //= require turbolinks
+// require 'greensock/TweenLite'
+// require 'greensock/easing/EasePack'
+// require 'greensock/jquery.gsap.js'
+//= require bootstrap.min
 //= require_tree .
-//= require 'greensock/TweenLite'
-//= require 'greensock/easing/EasePack'
-//= require 'greensock/jquery.gsap.js'

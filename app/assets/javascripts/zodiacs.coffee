@@ -24,10 +24,12 @@
   }
 
   // Launching modal
+  if(comment_saveBtn &&  comment_saveBtn != null){
    comment_saveBtn.addEventListener("click", function(){
      event.preventDefault();
      signUpModal.style.display="block";
     //  signUpModal.style.z-index="1050";
      signUpModal.style.opacity="1";
    })
+  }
  })`
