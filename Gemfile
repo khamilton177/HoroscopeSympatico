@@ -63,3 +63,5 @@ end
 
 # GSAP gem for use with ScrollMagic
 gem 'greensock-rails'
+
+gem 'paperclip'

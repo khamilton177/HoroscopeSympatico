@@ -2,7 +2,37 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+h1{
+  margin-bottom: 40px !important;
+  text-align: center;
+}
+
+.zodiacs_box{
+  // max-width: 800px;
+  // max-height: 800px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .signs{
-  max-width: 200px;
-  max-height: 200px;
+  position: relative;
+  display: block !important;
+  width: 25%;
+}
+
+
+.signs:before{
+  content: "";
+  display: block !important;
+  padding-top: 100%;
+}
+
+.signs > img{
+  width: 100%;
+  height: 100%;
+  position:  absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }
