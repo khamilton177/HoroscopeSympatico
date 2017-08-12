@@ -46,6 +46,14 @@
     <%= f.collection_select(:zodiac_id, Zodiac.all, :id, :sign) %>
   </div>
 
+  <div class="field">
+    <%= f.file_field :avatar %>
+
+    <% if @user.avatar? %>
+      <%= image_tag @user.avatar.url(:thumb) %>
+    <% end %>
+  </div>
+
   <div class="actions">
     <%= f.submit "Update" %>
   </div>

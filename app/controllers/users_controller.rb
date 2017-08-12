@@ -18,5 +18,10 @@ before_action :my_pred
   #   @user.journals=Journal.where(user_id: current_user.id).last
   #   redirect_to "/users(@user.journals.user_id)journals/new"
   # end
+  #
+  # def delete_avatar
+  #   @user.avatar = nil
+  #   @user.save
+  # end
 
 end
