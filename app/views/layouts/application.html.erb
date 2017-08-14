@@ -7,23 +7,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
   <body>
     <div class="container">
-      <nav>
-        <p class="navbar-text pull-right">
-        <%= link_to "Home", root_path, :class => 'navbar-link'  %>
-        <% if user_signed_in? %>
-          Logged in as <strong><%= current_user.email %></strong>.
-          <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
-          <%= link_to 'Sign out', destroy_user_session_path, :method => :delete, :class => 'navbar-link'  %> |
-        <% else %>
-          <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
-          <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
-        <% end %>
-        </p>
+      <nav class"navbar navbar-toggleble navbar-brand">
+        <%= link_to "Home", root_path, :class => 'navbar-brand' %>
+          <ul class="list-inline float-right nav-bar navbar-text">
+          <% if user_signed_in? %>
+            <li class="nav-item list-inline-item">
+              Logged in as <strong><%= current_user.email %></strong>
+            </li>
+            <li class="nav-item list-inline-item">
+              <%= image_tag current_user.avatar.url(:thumb), class: "nav_pic rounded" %>
+            </li>
+            <li class="nav-item list-inline-item">
+              <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %>
+            </li> |
+            <li class="nav-item list-inline-item">
+              <%= link_to 'Sign out', destroy_user_session_path, :method => :delete, :class => 'navbar-link'  %>
+            </li> |
+          <% else %>
+            <li class="nav-item list-inline-item">
+              <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %>
+            </li> |
+            <li class="nav-item list-inline-item">
+              <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
+            </li>
+          <% end %>
+        </ul>
       </nav>
       <p class="notice"><%= notice %></p>
       <p class="alert"><%= alert %></p>
@@ -31,6 +43,5 @@
     </div>
     <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/ScrollMagic.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/debug.addIndicators.min.js"></script>
-    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> -->
   </body>
 </html>

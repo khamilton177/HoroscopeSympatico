@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
 
-  root to: "home#index"
+  root to: "zodiacs#index"
   get "/zodiac/:id", to: "zodiacs#show", as: :zodiac
-  get "/users/:user_id/journals/new", to: "journals#new", as: :user_root
+  # get "/users/:user_id/journals/new", to: "journals#new", as: :user_root
+  get "/users/:id/zodiac/home", to: "zodiacs#show", as: :user_root
 
   # get "/users/:user_id/journals/new", to: "journals#new", as: :user_root
   # post "/users/:user_id/journals", to: "journals#create"

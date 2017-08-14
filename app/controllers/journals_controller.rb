@@ -1,17 +1,17 @@
 class JournalsController < ApplicationController
 
-before_action :current_user
-before_action :my_pred
-after_action :my_pred
+  before_action :current_user
+  before_action :my_pred
 
+  def my_pred
+    if current_user
+      @my_pred = Predict.where("zodiac_id =? and created_at > ?", current_user.zodiac_id, Time.now.midnight).last
+    end
+  end
 
   def my_pred
     @my_pred = Predict.where("zodiac_id =? and created_at > ?", current_user.zodiac_id, Time.now.midnight).last
   end
-
-  # def my_pred
-  #   @my_pred = Predict.where("zodiac_id =? and pred_date > ?", current_user.zodiac_id, Time.now.midnight).first
-  # end
 
   def index
     if current_user
@@ -22,7 +22,7 @@ after_action :my_pred
       flash[:alert] = "Session timed out"
       redirect_to "/"
     end
-end
+  end
 
   def show
     if current_user
@@ -31,12 +31,12 @@ end
       flash[:alert] = "Session timed out"
       redirect_to "/"
     end
-end
+  end
 
   def new
-    @params=params.inspect
+    @params=journal_params.inspect
     if @params.user_id.nil?
-      @user = User.find(params[:id])
+      @user = User.find(journal_params[:user_id])
         else
       @user = User.find(params[:user_id])
     end

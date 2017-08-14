@@ -36,3 +36,34 @@ h1{
   bottom: 0;
   right: 0;
 }
+
+.home-card{
+  // width: 50%;
+}
+
+.home-sign{
+  display: inline;
+  width: 25%;
+}
+
+.home-date{
+  width: 75%;
+  display: inline-block;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  text-align: right;
+}
+
+.home-sign-greet{
+  padding: 0 20px;
+}
+
+.home-pred{
+  display: inline-block;
+  width: 50%;
+}
+
+.home-comment{
+  width: 100%;
+}

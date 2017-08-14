@@ -1,28 +1,36 @@
-<input type="text" value="<%=@prediction["date"]%>">
-<textarea col="50" row="100"><%=@prediction["horoscope"]%></textarea>
-<input type="text" value="<%=@prediction["sunsign"]%>">
-<label for="comment">Comment</label>
-<input id="comment_sign_up" type="text" name="comment" value="">
-
-<!-- Using Boostrap Modal styling but calling custom javascript code -->
-<div id="signUpModal" class="modal fade" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="noThx close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">User Not Registered</h4>
+<div class="row">
+  <div class="col">
+  </div>
+  <div class="col-8">
+    <div class="card home-card">
+      <%=image_tag("#{@sign}.png", class: "#{@sign} card-img-top home-sign")%>
+      <span class="text home-date"><%=@prediction.pred_date.strftime("%B %d, %Y")%></span>
+      <div class="card-body home-sign-greet">
+        <h4 class="card-title">Hey <%=@sign%>,</h4>
+        <p class="text-left">
+          <%= @prediction.prediction %>
+          <!-- <footer class="blockquote-footer">Ganesha</footer> -->
+        </p>
+        <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
       </div>
-      <div class="modal-body">
-        <p>You must sign up to save comments.</p>
-      </div>
-      <div class="modal-footer">
-        <%= link_to "Sign Up!", "/users/sign_up", id: "subButton", class: "btn btn-primary" %>
-        <button type="button" class="noThx btn btn-default">No Thanks</button>
-      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <label for="comment">Comment</label>
+          <input id="comment_sign_up" class="home-comment" type="text" name="comment" row="10" value="">
+          <% if current_user.nil? %>
+            <%= render "signup_modal" %>
+            <%= link_to "Save", "#", id: "comment_saveBtn", action: "sign_up_modal" %>
+        </li>
+          <% else %>
+            <%= link_to "Save", "#", id: "comment_saveBtn", action: "" %>
+        </li>
+        <li class="list-group-item"><%= link_to("My Journals", user_journals_path(current_user.id), class: "card-link") %></li>
+        <li class="list-group-item"><%= link_to("Users List", users_path(), class: "card-link") %></li>
+        <li class="list-group-item">See Ratings</li>
+          <% end %>
+      </ul>
     </div>
   </div>
+  <div class="col">
+  </div>
 </div>
-
-<% if current_user.nil? %>
-  <%= link_to "Save", "#", id: "comment_saveBtn", action: "sign_up_modal" %>
-<% end %>
