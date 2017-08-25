@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :have_zodiac, only: [:create, :update], if: :devise_controller?
   helper_method :current_user
 
   require 'net/http'
@@ -14,22 +15,12 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    # params[user_id: @user.journals.user_id, predict_id: my_pred.id, comment: ""]
     user_root_path(resource) if current_user
   end
 
   def after_update_path_for(resource)
-    @user=User.find(current_user.id)
-    # @user.journals=Journal.where(user_id: current_user.id).last
-    # params[user_id: @user.journals.user_id, predict_id: my_pred.id, comment: ""]
-    # # "/users(@user.journals.user_id)journals/new" if current_user
-    user_root_path(resource) if current_user
+    user_root_path(resource)
   end
-
-  # def after_sign_in_path_for(resource)
-  #     @predict = Predict.where("zodiac_id =? and pred_date > ?", current_user.zodiac_id, Time.now.midnight).first
-  #     user_root_path(@predict.id) if current_user
-  #   end
 
   def do_daily_all_predicts
     #  Test in console using- ApplicationController.new.do_daily_all_predicts()
@@ -40,10 +31,6 @@ class ApplicationController < ActionController::Base
       uri = URI(url)
       response = Net::HTTP.get(uri) # => String
       @prediction=JSON.parse(response)
-      # puts "DATE- #{@prediction["date"]}"
-      # puts "ID- #{z.id}"
-      # puts "HORO- #{@prediction["horoscope"]}"
-      # horo=@prediction["horoscope"].gsub!(/[^0-9A-Za-z]/, '')
       horo=@prediction["horoscope"].gsub(/\['\\r\\n\s+/, "").gsub(/\s+\\r\\n\s+\\r\\n\s+'\]$/, "")
       # puts "HORO- #{horo}"
       @predict = Predict.create(
@@ -60,6 +47,14 @@ class ApplicationController < ActionController::Base
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:email, :password, :password_confirmation, :firstname, :lastname, :zodiac_id, :remember_me, :avatar, :avatar_cache])
     devise_parameter_sanitizer.permit(:account_update, keys: [:email, :password, :password_confirmation, :current_password, :firstname, :lastname, :zodiac_id, :avatar])
+  end
+
+  def have_zodiac
+    puts "I WAS HERE!!!"
+    if params[:zodiac_id].nil?
+      set_flash_message! :notice, :not_saved
+      respond_with resource, location: new_user_registration_path
+    end
   end
 
 end

@@ -1,8 +1,11 @@
-<h1>Journal</h1>
-
-<%= @journals.each do |j| %>
-  <div>
-    <input type="text" value="<%=j.comment%>">
-  </div>
-  <BR>
-<% end %>
+<h1>My Journal</h1>
+  <% @journals.each do |j| %>
+    <div>
+      <%= content_tag(:p, "#{j.predict.pred_date.strftime("%B %d, %Y")}") %>
+      <BR>
+      <%= content_tag(:p, "#{j.predict.prediction}") %>
+      <BR>
+      <%= content_tag(:p, "#{j.comment}") %>
+      <BR>
+    </div>
+  <% end %>

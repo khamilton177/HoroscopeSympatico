@@ -1,6 +1,6 @@
 `document.addEventListener("DOMContentLoaded", function(){
   // retrieving elements needed
-   var comment_saveBtn=document.querySelector("#comment_saveBtn");
+   var no_saveBtn=document.querySelector("#no_saveBtn");
    var noThx=document.querySelectorAll(".noThx");
    var signUpModal=document.querySelector("#signUpModal");
 
@@ -24,8 +24,8 @@
   }
 
   // Launching modal
-  if(comment_saveBtn &&  comment_saveBtn != null){
-   comment_saveBtn.addEventListener("click", function(){
+  if(no_saveBtn && no_saveBtn != null){
+   no_saveBtn.addEventListener("click", function(){
      event.preventDefault();
      signUpModal.style.display="block";
     //  signUpModal.style.z-index="1050";

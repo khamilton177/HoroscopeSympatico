@@ -1,6 +1,5 @@
 
-<%= form_for([@user, @user.journals.new]) do |form| %>
-    <%= form.hidden_field :predict_id, value: "#{@my_pred["id"]}", readonly: "true"%>
-    <%= form.text_field :comment %>
-    <%= form.submit %>
+<%= form_tag("/journals", id: "journal_form", class: "", method: :post) do %>
+  <%= text_field_tag(:comment, nil, required: true, class: "") %>
+<%= submit_tag("Save", class: "") %>
 <% end %>

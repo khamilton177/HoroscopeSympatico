@@ -1,19 +1,22 @@
 class RegistrationsController < Devise::RegistrationsController
-
-  private
-
-  # def after_update_path_for(resource)
-  #   @user=User.find(current_user.id)
-  #   @user.journals=Journal.where(user_id: current_user.id).last
-  #   params[user_id: @user.journals.user_id]
-  #   "/users(@user.journals.user_id)journals/new" if current_user
+  # prepend_before_action :authenticate_scope!, only: [:edit, :update, :destroy]
+  # before_action :have_zodiac, only: [:create, :update]
+  #
+  # def have_zodiac
+  #   puts "I WAS HERE!!!"
+  #   if resource.zodiac_id.nil?
+  #     render :new
+  #   end
   # end
 
-  def sign_up_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :firstname, :lastname, :zodiac_id, :remember_me, :avatar, :avatar_cache)
-  end
+  protected
 
-  def account_update_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :current_password, :firstname, :lastname, :zodiac_id, :avatar)
-  end
+    def sign_up_params
+      params.require(:user).permit(:email, :password, :password_confirmation, :firstname, :lastname, :zodiac_id, :remember_me, :avatar, :avatar_cache)
+    end
+
+    def account_update_params
+      params.require(:user).permit(:email, :password, :password_confirmation, :current_password, :firstname, :lastname, :zodiac_id, :avatar)
+    end
+
 end

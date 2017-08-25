@@ -15,7 +15,7 @@
 #   { sign: "Virgo" },
 #   { sign: "Libra" },
 #   { sign: "Scorpio" },
-#   { sign: "Sagitarius" },
+#   { sign: "Sagittarius" },
 #   { sign: "Capricorn" },
 #   { sign: "Aquarius" },
 #   { sign: "Pisces" }

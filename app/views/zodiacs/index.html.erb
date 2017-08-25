@@ -5,7 +5,7 @@
   </div>
   <div class="col-8 zodiacs_box">
     <% @zodiacs.each do |z| %>
-      <%= link_to zodiac_path(id: z.sign), id: z.sign, class: "signs", title: "#{z[:sign]}" do %>
+      <%= link_to zodiac_path(sign: z.sign), id: z.sign, class: "signs", title: "#{z[:sign]}" do %>
         <%=image_tag("#{z[:sign]}.png", class: "#{z[:sign]}")%>
       <% end %>
     <%end%>

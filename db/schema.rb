@@ -10,14 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170812010400) do
+ActiveRecord::Schema.define(version: 20170822011526) do
 
-  create_table "journals", id: false, force: :cascade do |t|
-    t.integer "user_id",    null: false
-    t.integer "predict_id", null: false
-    t.text    "comment"
-    t.index ["predict_id", "user_id"], name: "index_journals_on_predict_id_and_user_id"
-    t.index ["user_id", "predict_id"], name: "index_journals_on_user_id_and_predict_id"
+  create_table "journals", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "predict_id"
+    t.text     "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["predict_id"], name: "index_journals_on_predict_id"
+    t.index ["user_id"], name: "index_journals_on_user_id"
   end
 
   create_table "predicts", force: :cascade do |t|
@@ -43,7 +45,7 @@ ActiveRecord::Schema.define(version: 20170812010400) do
     t.datetime "updated_at",                          null: false
     t.string   "firstname"
     t.string   "lastname"
-    t.integer  "zodiac_id"
+    t.integer  "zodiac_id",                           null: false
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"

@@ -1,11 +1,15 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A journal application that allows users to see and save daily horoscope predictions to personal journals to track accuracy of predictions.  Horoscopes are supplied via an API.  Will also include rating system.
 
-Things you may want to cover:
 
-* Ruby version
+* Ruby version- 2.4.0
+  Devise
+  ratyrate gem
+  http://horoscope-api.herokuapp.com
+  net/http
+  uri
+  json
 
 * System dependencies
 

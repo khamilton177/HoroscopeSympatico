@@ -5,8 +5,10 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   has_one :zodiac
+  # has_many :journals, dependent: :destroy
   has_many :journals
-  has_many :predicts, through: :journals
+  # has_many :predicts, through: :journals
   has_attached_file :avatar, styles: { medium: "300x300", thumb: ["100X100", :png] }, default_url: "/images/:style/missing.png"
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
+  # validates :zodiac, presence: true, on: :save
 end
