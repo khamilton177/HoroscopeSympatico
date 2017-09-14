@@ -62,7 +62,7 @@ source 'https://rails-assets.org' do
 end
 
 # GSAP gem for use with ScrollMagic
-gem 'greensock-rails'
+# gem 'greensock-rails'
 
 gem "paperclip", "~> 5.0.0"
 
